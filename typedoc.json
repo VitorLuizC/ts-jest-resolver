@@ -1,7 +1,0 @@
-{
-  "out": "./docs",
-  "name": "ts-jest-resolver",
-  "theme": "markdown",
-  "readme": "none",
-  "tsconfig": "./tsconfig.bundle.json"
-}

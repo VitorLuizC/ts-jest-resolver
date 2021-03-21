@@ -33,10 +33,6 @@ This module has an UMD bundle available through JSDelivr and Unpkg CDNs.
 </script>
 ```
 
-## Documentation
-
-[Documentation generated from source files by Typedoc](./docs/README.md).
-
 ## License
 
 Released under [MIT License](./LICENSE).
