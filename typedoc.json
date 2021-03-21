@@ -1,0 +1,7 @@
+{
+  "out": "./docs",
+  "name": "[libraryNameWithSpacesAndUpperCases]",
+  "theme": "markdown",
+  "readme": "none",
+  "tsconfig": "./tsconfig.bundle.json"
+}
