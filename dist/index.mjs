@@ -1,6 +1,6 @@
 /*!
- * [libraryName] v0.0.0
- * (c) [authorFullName]
+ * ts-jest-resolver v0.0.0
+ * (c) Vitor Luiz Cavalcanti
  * Released under the MIT License.
  */
 

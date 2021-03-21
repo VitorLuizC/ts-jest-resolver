@@ -1,5 +1,5 @@
 {
-  "name": "[libraryName]",
+  "name": "ts-jest-resolver",
   "version": "0.0.0",
   "description": "",
   "cdn": "dist/index.umd.js",
@@ -50,7 +50,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/[repositoryOwner]/[repositoryName].git"
+    "url": "git+https://github.com/VitorLuizC/ts-jest-resolver.git"
   },
   "keywords": [
     "typescript",
@@ -58,11 +58,11 @@
     "library"
   ],
   "author": {
-    "name": "[authorFullName]"
+    "name": "Vitor Luiz Cavalcanti"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/[repositoryOwner]/[repositoryName]/issues"
+    "url": "https://github.com/VitorLuizC/ts-jest-resolver/issues"
   },
-  "homepage": "https://github.com/[repositoryOwner]/[repositoryName]#readme"
+  "homepage": "https://github.com/VitorLuizC/ts-jest-resolver#readme"
 }
