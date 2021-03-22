@@ -1,4 +1,4 @@
-import resolverForTSJest, { Path, ResolverOptions } from './index';
+import resolverForTSJest, { Path, ResolverOptions } from './index.js';
 import defaultResolver from 'jest-resolve/build/defaultResolver';
 
 jest.mock('jest-resolve/build/defaultResolver');
