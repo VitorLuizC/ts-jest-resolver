@@ -1,23 +1,15 @@
+import defaultResolver from 'jest-resolve/build/defaultResolver';
+export declare type Path = Parameters<typeof defaultResolver>[0];
+export declare type ResolverOptions = Parameters<typeof defaultResolver>[1];
 /**
- * A Branded Type for values parseable to number.
- */
-export declare type NumberParseable = (number | string | boolean) & {
-    readonly isNumberParseble: unique symbol;
-};
-/**
- * Check if value is parseable to number.
- * @example ```ts
- * isNumberParseable('AAAA');
- * //=> false
+ * A resolver for `jest` that uses same strategy as TS when resolving files with
+ * JavaScript extension (".js"). Otherwise it just uses default resolver.
  *
- * isNumberParseable('100');
- * //=> true
- *
- * if (!isNumberParseable(value))
- *   throw new Error('Value can\'t be parseable to `Number`.')
- * return Number(value);
- * ```
- * @param value - An `unknown` value to be checked.
+ * When receives a path with JavaScript extension (".js"):
+ * 1. It tries to resolve to a path with ".ts".
+ * 2. If no file was found, it tries to resolve to a path with ".tsx".
+ * 3. If no file was found, it resolves to original path (with ".js").
  */
-export declare const isNumberParseable: (value: unknown) => value is NumberParseable;
+declare function resolverForTSJest(path: Path, options: ResolverOptions): Path;
+export default resolverForTSJest;
 //# sourceMappingURL=index.d.ts.map
