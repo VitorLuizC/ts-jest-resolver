@@ -1,5 +1,5 @@
 /*!
- * ts-jest-resolver v0.0.0
+ * ts-jest-resolver v1.0.0
  * (c) Vitor Luiz Cavalcanti
  * Released under the MIT License.
  */
