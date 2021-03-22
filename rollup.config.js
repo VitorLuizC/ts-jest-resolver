@@ -22,7 +22,7 @@ const banner = `/*!
 function createOutputOptions(options) {
   return {
     banner,
-    exports: 'named',
+    exports: 'default',
     sourcemap: true,
     ...options,
   };
