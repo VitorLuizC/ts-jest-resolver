@@ -5,7 +5,7 @@
 .DS_Store
 
 # Node.js modules.
-node_modules/
+node_modules
 
 # NPM's shrinkwrap.
 # We're using `package-lock.json` instead.
@@ -15,7 +15,7 @@ npm-shrinkwrap.json
 # We're using NPM and it provide its own lockfile and settings.
 yarn.lock
 .pnp.*
-.yarn/
+.yarn
 .yarnrc
 .yarnrc.yaml
 
@@ -28,3 +28,9 @@ pnpmfile.js
 # Log's files.
 *.log
 *.log.*
+
+# Generated distribution bundles and their source-maps.
+/dist
+
+# Generated type declarations.
+/types
