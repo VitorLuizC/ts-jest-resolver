@@ -46,9 +46,11 @@
     "url": "git+https://github.com/VitorLuizC/ts-jest-resolver.git"
   },
   "keywords": [
+    "jest",
+    "jest-resolver",
+    "ts-jest",
     "typescript",
-    "boilerplate",
-    "library"
+    "ts-jest-resolver"
   ],
   "author": {
     "name": "Vitor Luiz Cavalcanti"
