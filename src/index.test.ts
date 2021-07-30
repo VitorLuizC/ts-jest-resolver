@@ -3,7 +3,7 @@ import defaultResolver from 'jest-resolve/build/defaultResolver';
 
 jest.mock('jest-resolve/build/defaultResolver');
 
-const defaultResolverMock = (defaultResolver as unknown) as jest.Mock<
+const defaultResolverMock = defaultResolver as unknown as jest.Mock<
   Path,
   [Path, ResolverOptions]
 >;
