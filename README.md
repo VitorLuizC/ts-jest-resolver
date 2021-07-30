@@ -10,7 +10,7 @@ A resolver for [`jest`](https://jestjs.io/) that uses the same strategy as TS wh
 - ⚡ Lightweight:
   - It's bundled using rollup.js.
 - 🔋 Bateries included:
-  - No dependencies, it just uses `jest-resolve` (which is already a jest dependency).
+  - Just depends on `jest-resolver`.
 - ✅ Safe:
   - Made with ESLint, TypeScript as strict as possible.
   - Unit tests with Jest.
