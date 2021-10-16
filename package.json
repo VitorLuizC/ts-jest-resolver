@@ -20,7 +20,7 @@
     ]
   },
   "dependencies": {
-    "jest-resolve": "^26.6.2"
+    "jest-resolve": "^27.2.5"
   },
   "devDependencies": {
     "@types/eslint": "^7.28.1",
