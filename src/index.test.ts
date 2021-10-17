@@ -1,12 +1,6 @@
 import resolverForTSJest, { Path, ResolverOptions } from './index.js';
-import defaultResolver from 'jest-resolve/build/defaultResolver';
 
-jest.mock('jest-resolve/build/defaultResolver');
-
-const defaultResolverMock = defaultResolver as unknown as jest.Mock<
-  Path,
-  [Path, ResolverOptions]
->;
+const defaultResolver = jest.fn<Path, [Path, ResolverOptions]>();
 
 const DEFAULT_OPTIONS: ResolverOptions = {
   basedir: '/usr/src/app',
@@ -15,7 +9,7 @@ const DEFAULT_OPTIONS: ResolverOptions = {
 
 describe('resolverForTSJest', () => {
   beforeEach(() => {
-    defaultResolverMock.mockReset();
+    defaultResolver.mockReset();
   });
 
   describe('when path has ".js" extension', () => {
@@ -25,13 +19,13 @@ describe('resolverForTSJest', () => {
 
     describe('and the module has ".ts" extension', () => {
       beforeEach(() => {
-        defaultResolverMock.mockImplementationOnce((path) => path);
+        defaultResolver.mockImplementationOnce((path) => path);
       });
 
       it('tries to resolve path with ".ts" extension', () => {
         resolverForTSJest(PATH_WITH_JS, DEFAULT_OPTIONS);
 
-        expect(defaultResolverMock).toHaveBeenCalledWith(
+        expect(defaultResolver).toHaveBeenCalledWith(
           PATH_WITH_TS,
           DEFAULT_OPTIONS,
         );
@@ -46,7 +40,7 @@ describe('resolverForTSJest', () => {
 
     describe('and the module has ".tsx" extension', () => {
       beforeEach(() => {
-        defaultResolverMock
+        defaultResolver
           .mockImplementationOnce(() => {
             throw new Error('ENOENT');
           })
@@ -56,13 +50,13 @@ describe('resolverForTSJest', () => {
       it('tries to resolve path with ".ts" and them ".tsx" extension', () => {
         resolverForTSJest(PATH_WITH_JS, DEFAULT_OPTIONS);
 
-        expect(defaultResolverMock).toHaveBeenNthCalledWith(
+        expect(defaultResolver).toHaveBeenNthCalledWith(
           1,
           PATH_WITH_TS,
           DEFAULT_OPTIONS,
         );
 
-        expect(defaultResolverMock).toHaveBeenNthCalledWith(
+        expect(defaultResolver).toHaveBeenNthCalledWith(
           2,
           PATH_WITH_TSX,
           DEFAULT_OPTIONS,
@@ -78,7 +72,7 @@ describe('resolverForTSJest', () => {
 
     describe('and there are no module with ".ts" or ".tsx" extension', () => {
       beforeEach(() => {
-        defaultResolverMock
+        defaultResolver
           .mockImplementationOnce(() => {
             throw new Error('ENOENT');
           })
@@ -91,19 +85,19 @@ describe('resolverForTSJest', () => {
       it('tries to resolve path with ".ts", ".tsx" and them ".js" extension', () => {
         resolverForTSJest(PATH_WITH_JS, DEFAULT_OPTIONS);
 
-        expect(defaultResolverMock).toHaveBeenNthCalledWith(
+        expect(defaultResolver).toHaveBeenNthCalledWith(
           1,
           PATH_WITH_TS,
           DEFAULT_OPTIONS,
         );
 
-        expect(defaultResolverMock).toHaveBeenNthCalledWith(
+        expect(defaultResolver).toHaveBeenNthCalledWith(
           2,
           PATH_WITH_TSX,
           DEFAULT_OPTIONS,
         );
 
-        expect(defaultResolverMock).toHaveBeenNthCalledWith(
+        expect(defaultResolver).toHaveBeenNthCalledWith(
           3,
           PATH_WITH_JS,
           DEFAULT_OPTIONS,
@@ -119,7 +113,7 @@ describe('resolverForTSJest', () => {
 
     describe('and there are no module at all', () => {
       beforeEach(() => {
-        defaultResolverMock
+        defaultResolver
           .mockImplementationOnce(() => {
             throw new Error('ENOENT');
           })
@@ -143,15 +137,12 @@ describe('resolverForTSJest', () => {
     const PATH_WITHOUT_JS = 'react';
 
     it('resolves with received path', () => {
-      defaultResolverMock.mockImplementationOnce((path) => path);
+      defaultResolver.mockImplementationOnce((path) => path);
 
       const result = resolverForTSJest(PATH_WITHOUT_JS, DEFAULT_OPTIONS);
 
-      expect(defaultResolverMock).toBeCalledTimes(1);
-      expect(defaultResolverMock).toBeCalledWith(
-        PATH_WITHOUT_JS,
-        DEFAULT_OPTIONS,
-      );
+      expect(defaultResolver).toBeCalledTimes(1);
+      expect(defaultResolver).toBeCalledWith(PATH_WITHOUT_JS, DEFAULT_OPTIONS);
       expect(result).toBe(PATH_WITHOUT_JS);
     });
   });
