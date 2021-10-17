@@ -14,8 +14,8 @@ type Resolution = {
 
 const resolutions: Resolution[] = [
   {
-    matcher: /\.js$/i,
-    extensions: ['.ts', '.tsx'],
+    matcher: /\.jsx?$/i,
+    extensions: ['.tsx', '.ts'],
   },
   {
     matcher: /\.mjs$/i,
