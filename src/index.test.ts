@@ -17,47 +17,15 @@ describe('resolverForTSJest', () => {
     const PATH_WITH_TS = './lib/formatToBRL.ts';
     const PATH_WITH_TSX = './lib/formatToBRL.tsx';
 
-    describe('and the module has ".ts" extension', () => {
+    describe('and the module has ".tsx" extension', () => {
       beforeEach(() => {
         defaultResolver.mockImplementationOnce((path) => path);
       });
 
-      it('tries to resolve path with ".ts" extension', () => {
+      it('tries to resolve path with ".tsx" extension', () => {
         resolverForTSJest(PATH_WITH_JS, DEFAULT_OPTIONS);
 
         expect(defaultResolver).toHaveBeenCalledWith(
-          PATH_WITH_TS,
-          DEFAULT_OPTIONS,
-        );
-      });
-
-      it('resolves to the module with ".ts" extension', () => {
-        const result = resolverForTSJest(PATH_WITH_JS, DEFAULT_OPTIONS);
-
-        expect(result).toBe(PATH_WITH_TS);
-      });
-    });
-
-    describe('and the module has ".tsx" extension', () => {
-      beforeEach(() => {
-        defaultResolver
-          .mockImplementationOnce(() => {
-            throw new Error('ENOENT');
-          })
-          .mockImplementationOnce((path) => path);
-      });
-
-      it('tries to resolve path with ".ts" and them ".tsx" extension', () => {
-        resolverForTSJest(PATH_WITH_JS, DEFAULT_OPTIONS);
-
-        expect(defaultResolver).toHaveBeenNthCalledWith(
-          1,
-          PATH_WITH_TS,
-          DEFAULT_OPTIONS,
-        );
-
-        expect(defaultResolver).toHaveBeenNthCalledWith(
-          2,
           PATH_WITH_TSX,
           DEFAULT_OPTIONS,
         );
@@ -70,7 +38,39 @@ describe('resolverForTSJest', () => {
       });
     });
 
-    describe('and there are no module with ".ts" or ".tsx" extension', () => {
+    describe('and the module has ".ts" extension', () => {
+      beforeEach(() => {
+        defaultResolver
+          .mockImplementationOnce(() => {
+            throw new Error('ENOENT');
+          })
+          .mockImplementationOnce((path) => path);
+      });
+
+      it('tries to resolve path with ".tsx" and them ".ts" extension', () => {
+        resolverForTSJest(PATH_WITH_JS, DEFAULT_OPTIONS);
+
+        expect(defaultResolver).toHaveBeenNthCalledWith(
+          1,
+          PATH_WITH_TSX,
+          DEFAULT_OPTIONS,
+        );
+
+        expect(defaultResolver).toHaveBeenNthCalledWith(
+          2,
+          PATH_WITH_TS,
+          DEFAULT_OPTIONS,
+        );
+      });
+
+      it('resolves to the module with ".ts" extension', () => {
+        const result = resolverForTSJest(PATH_WITH_JS, DEFAULT_OPTIONS);
+
+        expect(result).toBe(PATH_WITH_TS);
+      });
+    });
+
+    describe('and there are no module with ".tsx" or ".ts" extension', () => {
       beforeEach(() => {
         defaultResolver
           .mockImplementationOnce(() => {
@@ -82,18 +82,18 @@ describe('resolverForTSJest', () => {
           .mockImplementationOnce((path) => path);
       });
 
-      it('tries to resolve path with ".ts", ".tsx" and them ".js" extension', () => {
+      it('tries to resolve path with ".tsx", ".ts" and them ".js" extension', () => {
         resolverForTSJest(PATH_WITH_JS, DEFAULT_OPTIONS);
 
         expect(defaultResolver).toHaveBeenNthCalledWith(
           1,
-          PATH_WITH_TS,
+          PATH_WITH_TSX,
           DEFAULT_OPTIONS,
         );
 
         expect(defaultResolver).toHaveBeenNthCalledWith(
           2,
-          PATH_WITH_TSX,
+          PATH_WITH_TS,
           DEFAULT_OPTIONS,
         );
 
@@ -128,6 +128,127 @@ describe('resolverForTSJest', () => {
       it('let defaultResolver throw its error', () => {
         expect(() => {
           resolverForTSJest(PATH_WITH_JS, DEFAULT_OPTIONS);
+        }).toThrowError('ENOENT');
+      });
+    });
+  });
+
+  describe('when path has ".jsx" extension', () => {
+    const PATH_WITH_JSX = './lib/formatToBRL.jsx';
+    const PATH_WITH_TS = './lib/formatToBRL.ts';
+    const PATH_WITH_TSX = './lib/formatToBRL.tsx';
+
+    describe('and the module has ".tsx" extension', () => {
+      beforeEach(() => {
+        defaultResolver.mockImplementationOnce((path) => path);
+      });
+
+      it('tries to resolve path with ".tsx" extension', () => {
+        resolverForTSJest(PATH_WITH_JSX, DEFAULT_OPTIONS);
+
+        expect(defaultResolver).toHaveBeenCalledWith(
+          PATH_WITH_TSX,
+          DEFAULT_OPTIONS,
+        );
+      });
+
+      it('resolves to the module with ".tsx" extension', () => {
+        const result = resolverForTSJest(PATH_WITH_JSX, DEFAULT_OPTIONS);
+
+        expect(result).toBe(PATH_WITH_TSX);
+      });
+    });
+
+    describe('and the module has ".ts" extension', () => {
+      beforeEach(() => {
+        defaultResolver
+          .mockImplementationOnce(() => {
+            throw new Error('ENOENT');
+          })
+          .mockImplementationOnce((path) => path);
+      });
+
+      it('tries to resolve path with ".tsx" and them ".ts" extension', () => {
+        resolverForTSJest(PATH_WITH_JSX, DEFAULT_OPTIONS);
+
+        expect(defaultResolver).toHaveBeenNthCalledWith(
+          1,
+          PATH_WITH_TSX,
+          DEFAULT_OPTIONS,
+        );
+
+        expect(defaultResolver).toHaveBeenNthCalledWith(
+          2,
+          PATH_WITH_TS,
+          DEFAULT_OPTIONS,
+        );
+      });
+
+      it('resolves to the module with ".ts" extension', () => {
+        const result = resolverForTSJest(PATH_WITH_JSX, DEFAULT_OPTIONS);
+
+        expect(result).toBe(PATH_WITH_TS);
+      });
+    });
+
+    describe('and there are no module with ".ts" or ".tsx" extension', () => {
+      beforeEach(() => {
+        defaultResolver
+          .mockImplementationOnce(() => {
+            throw new Error('ENOENT');
+          })
+          .mockImplementationOnce(() => {
+            throw new Error('ENOENT');
+          })
+          .mockImplementationOnce((path) => path);
+      });
+
+      it('tries to resolve path with ".ts", ".tsx" and them ".jsx" extension', () => {
+        resolverForTSJest(PATH_WITH_JSX, DEFAULT_OPTIONS);
+
+        expect(defaultResolver).toHaveBeenNthCalledWith(
+          1,
+          PATH_WITH_TSX,
+          DEFAULT_OPTIONS,
+        );
+
+        expect(defaultResolver).toHaveBeenNthCalledWith(
+          2,
+          PATH_WITH_TS,
+          DEFAULT_OPTIONS,
+        );
+
+        expect(defaultResolver).toHaveBeenNthCalledWith(
+          3,
+          PATH_WITH_JSX,
+          DEFAULT_OPTIONS,
+        );
+      });
+
+      it('resolves to the module with ".jsx" extension', () => {
+        const result = resolverForTSJest(PATH_WITH_JSX, DEFAULT_OPTIONS);
+
+        expect(result).toBe(PATH_WITH_JSX);
+      });
+    });
+
+    describe('and there are no module at all', () => {
+      beforeEach(() => {
+        defaultResolver
+          .mockImplementationOnce(() => {
+            throw new Error('ENOENT');
+          })
+          .mockImplementationOnce(() => {
+            throw new Error('ENOENT');
+          })
+          .mockImplementationOnce(() => {
+            throw new Error('ENOENT');
+          });
+      });
+
+      it('let defaultResolver throw its error', () => {
+        expect(() => {
+          resolverForTSJest(PATH_WITH_JSX, DEFAULT_OPTIONS);
         }).toThrowError('ENOENT');
       });
     });
