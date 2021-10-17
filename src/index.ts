@@ -1,14 +1,31 @@
 import type defaultResolver from 'jest-resolve/build/defaultResolver';
 
-/**
- * A `RegExp` that checks if file name has JavaScript extension.
- */
-const JAVASCRIPT_EXTENSION = /\.js$/i;
+type Resolution = {
+  /**
+   * A `RegExp` that checks if file name has a JavaScript extension.
+   */
+  matcher: RegExp;
 
-/**
- * A list of TypeScript file extensions, in the order used by its resolver.
- */
-const TYPESCRIPT_EXTENSIONS = ['.ts', '.tsx'];
+  /**
+   * A list of TypeScript file extensions, in the order used by its resolver.
+   */
+  extensions: string[];
+};
+
+const resolutions: Resolution[] = [
+  {
+    matcher: /\.js$/i,
+    extensions: ['.ts', '.tsx'],
+  },
+  {
+    matcher: /\.mjs$/i,
+    extensions: ['.mts'],
+  },
+  {
+    matcher: /\.cjs$/i,
+    extensions: ['.cts'],
+  },
+];
 
 export type Path = Parameters<typeof defaultResolver>[0];
 
@@ -26,10 +43,12 @@ export type ResolverOptions = Parameters<typeof defaultResolver>[1];
 function resolverForTSJest(path: Path, options: ResolverOptions): Path {
   const resolver = options.defaultResolver;
 
-  if (JAVASCRIPT_EXTENSION.test(path)) {
-    for (const extension of TYPESCRIPT_EXTENSIONS) {
+  const resolution = resolutions.find(({ matcher }) => matcher.test(path));
+
+  if (resolution) {
+    for (const extension of resolution.extensions) {
       try {
-        return resolver(path.replace(JAVASCRIPT_EXTENSION, extension), options);
+        return resolver(path.replace(resolution.matcher, extension), options);
       } catch {
         continue;
       }
