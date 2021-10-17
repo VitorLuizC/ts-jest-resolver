@@ -3,14 +3,14 @@
 [![Build Status](https://travis-ci.org/VitorLuizC/ts-jest-resolver.svg?branch=master)](https://travis-ci.org/VitorLuizC/ts-jest-resolver)
 [![License](https://badgen.net/github/license/VitorLuizC/ts-jest-resolver)](./LICENSE)
 
-A resolver for [`jest`](https://jestjs.io/) that uses the same strategy as TS when resolving files with JavaScript extension (".js"). It works pretty well with [`ts-jest`](https://kulshekhar.github.io/ts-jest/) or [`babel`](https://babeljs.io/) with [`@babel/preset-typescript`](https://babeljs.io/docs/en/babel-preset-typescript).
+A resolver for [`jest`](https://jestjs.io/) that uses the same strategy as TS when resolving files with JavaScript extensions (".js", ".cjs" and ".mjs"). It works pretty well with [`ts-jest`](https://kulshekhar.github.io/ts-jest/) or [`babel`](https://babeljs.io/) with [`@babel/preset-typescript`](https://babeljs.io/docs/en/babel-preset-typescript).
 
 - 📦 Distributions in ESM and CommonJS.
   - Supports both Node.js ESM (import/export) and CommonJS (require/module.exports).
 - ⚡ Lightweight:
   - It's bundled using rollup.js.
 - 🔋 Bateries included:
-  - Just depends on `jest-resolver`.
+  - It just depends on `jest-resolver` types.
 - ✅ Safe:
   - Made with ESLint, TypeScript as strict as possible.
   - Unit tests with Jest.
@@ -69,6 +69,32 @@ import EventEmitter from './EventEmitter.js';
 
    ```ts
    import EventEmitter from './EventEmitter.js';
+   ```
+
+It does the same for ".cts" and ".mts" extensions.
+
+Ex.
+```ts
+import * as colors from './colors.mjs'
+import { discoverPath } from './getFiles.cjs';
+```
+
+1. It tries to resolve the import path with ".mts" and ".cts" instead of ".mjs" and ".cjs".
+
+   Ex.
+
+   ```ts
+   import * as colors from './colors.mts'
+   import { discoverPath } from './getFiles.cts';
+   ```
+
+2. If the module wasn't found, it resolves to the original import paths (with ".mjs" and ".cjs").
+
+   Ex.
+
+   ```ts
+   import * as colors from './colors.mjs'
+   import { discoverPath } from './getFiles.cjs';
    ```
 
 ## License
