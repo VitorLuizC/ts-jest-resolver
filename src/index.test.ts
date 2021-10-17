@@ -133,6 +133,158 @@ describe('resolverForTSJest', () => {
     });
   });
 
+  describe('when path has ".mjs" extension', () => {
+    const PATH_WITH_MJS = './lib/formatToBRL.mjs';
+    const PATH_WITH_MTS = './lib/formatToBRL.mts';
+
+    describe('and the module has ".mts" extension', () => {
+      beforeEach(() => {
+        defaultResolver.mockImplementationOnce((path) => path);
+      });
+
+      it('tries to resolve path with ".mts" extension', () => {
+        resolverForTSJest(PATH_WITH_MJS, DEFAULT_OPTIONS);
+
+        expect(defaultResolver).toHaveBeenCalledWith(
+          PATH_WITH_MTS,
+          DEFAULT_OPTIONS,
+        );
+      });
+
+      it('resolves to the module with ".mts" extension', () => {
+        const result = resolverForTSJest(PATH_WITH_MJS, DEFAULT_OPTIONS);
+
+        expect(result).toBe(PATH_WITH_MTS);
+      });
+    });
+
+    describe('and there are no module with ".mts" extension', () => {
+      beforeEach(() => {
+        defaultResolver
+          .mockImplementationOnce(() => {
+            throw new Error('ENOENT');
+          })
+          .mockImplementationOnce((path) => path);
+      });
+
+      it('tries to resolve path with ".mts" and them ".mjs" extension', () => {
+        resolverForTSJest(PATH_WITH_MJS, DEFAULT_OPTIONS);
+
+        expect(defaultResolver).toHaveBeenNthCalledWith(
+          1,
+          PATH_WITH_MTS,
+          DEFAULT_OPTIONS,
+        );
+
+        expect(defaultResolver).toHaveBeenNthCalledWith(
+          2,
+          PATH_WITH_MJS,
+          DEFAULT_OPTIONS,
+        );
+      });
+
+      it('resolves to the module with ".mjs" extension', () => {
+        const result = resolverForTSJest(PATH_WITH_MJS, DEFAULT_OPTIONS);
+
+        expect(result).toBe(PATH_WITH_MJS);
+      });
+    });
+
+    describe('and there are no module at all', () => {
+      beforeEach(() => {
+        defaultResolver
+          .mockImplementationOnce(() => {
+            throw new Error('ENOENT');
+          })
+          .mockImplementationOnce(() => {
+            throw new Error('ENOENT');
+          });
+      });
+
+      it('let defaultResolver throw its error', () => {
+        expect(() => {
+          resolverForTSJest(PATH_WITH_MJS, DEFAULT_OPTIONS);
+        }).toThrowError('ENOENT');
+      });
+    });
+  });
+
+  describe('when path has ".cjs" extension', () => {
+    const PATH_WITH_CJS = './lib/formatToBRL.cjs';
+    const PATH_WITH_CTS = './lib/formatToBRL.cts';
+
+    describe('and the module has ".cts" extension', () => {
+      beforeEach(() => {
+        defaultResolver.mockImplementationOnce((path) => path);
+      });
+
+      it('tries to resolve path with ".cts" extension', () => {
+        resolverForTSJest(PATH_WITH_CJS, DEFAULT_OPTIONS);
+
+        expect(defaultResolver).toHaveBeenCalledWith(
+          PATH_WITH_CTS,
+          DEFAULT_OPTIONS,
+        );
+      });
+
+      it('resolves to the module with ".cts" extension', () => {
+        const result = resolverForTSJest(PATH_WITH_CJS, DEFAULT_OPTIONS);
+
+        expect(result).toBe(PATH_WITH_CTS);
+      });
+    });
+
+    describe('and there are no module with ".cts" extension', () => {
+      beforeEach(() => {
+        defaultResolver
+          .mockImplementationOnce(() => {
+            throw new Error('ENOENT');
+          })
+          .mockImplementationOnce((path) => path);
+      });
+
+      it('tries to resolve path with ".cts" and them ".cjs" extension', () => {
+        resolverForTSJest(PATH_WITH_CJS, DEFAULT_OPTIONS);
+
+        expect(defaultResolver).toHaveBeenNthCalledWith(
+          1,
+          PATH_WITH_CTS,
+          DEFAULT_OPTIONS,
+        );
+
+        expect(defaultResolver).toHaveBeenNthCalledWith(
+          2,
+          PATH_WITH_CJS,
+          DEFAULT_OPTIONS,
+        );
+      });
+
+      it('resolves to the module with ".cjs" extension', () => {
+        const result = resolverForTSJest(PATH_WITH_CJS, DEFAULT_OPTIONS);
+
+        expect(result).toBe(PATH_WITH_CJS);
+      });
+    });
+
+    describe('and there are no module at all', () => {
+      beforeEach(() => {
+        defaultResolver
+          .mockImplementationOnce(() => {
+            throw new Error('ENOENT');
+          })
+          .mockImplementationOnce(() => {
+            throw new Error('ENOENT');
+          });
+      });
+
+      it('let defaultResolver throw its error', () => {
+        expect(() => {
+          resolverForTSJest(PATH_WITH_CJS, DEFAULT_OPTIONS);
+        }).toThrowError('ENOENT');
+      });
+    });
+  });
+
   describe('when path don\'t have ".js" extension', () => {
     const PATH_WITHOUT_JS = 'react';
 
