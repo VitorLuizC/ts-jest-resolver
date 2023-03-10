@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "skipLibCheck": true,
+
+    // Enables ".js" extension.
+    "allowJs": true,
+
+    // Enables ".tsx" extension.
+    "jsx": "preserve",
+
+    // Enables ".cts" and ".mts" extensions.
+    "module": "Node16",
+    "moduleResolution": "Node16"
+  },
+  "include": ["./src"]
+}
