@@ -1,6 +1,6 @@
 {
   "name": "ts-jest-resolver",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A resolver for `jest` that uses same strategy as TS when resolving files with JavaScript extension (\".js\").",
   "main": "./dist/index.js",
   "types": "./types/index.d.ts",
