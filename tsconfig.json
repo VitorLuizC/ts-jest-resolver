@@ -1,10 +1,5 @@
 {
   "compilerOptions": {
-    // React.js JSX settings.
-    "jsx": "react",
-    "jsxFactory": "React.createElement",
-    "jsxFragmentFactory": "React.Fragment",
-
     // Module settings.
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
