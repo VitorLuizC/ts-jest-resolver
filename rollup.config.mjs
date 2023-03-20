@@ -2,7 +2,7 @@
 
 import typescript2 from 'rollup-plugin-typescript2';
 
-import pkg from './package.json';
+import pkg from './package.json' assert { type: 'json' };
 
 /**
  * Comment with library information to be appended in the generated bundles.

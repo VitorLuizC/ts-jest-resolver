@@ -1,4 +1,8 @@
-import type defaultResolver from 'jest-resolve/build/defaultResolver';
+import type { ResolverOptions } from 'jest-resolve';
+
+export type Path = string;
+
+export type { ResolverOptions };
 
 type Resolution = {
   /**
@@ -30,10 +34,6 @@ const resolutions: Resolution[] = [
     extensions: ['.mts'],
   },
 ];
-
-export type Path = Parameters<typeof defaultResolver>[0];
-
-export type ResolverOptions = Parameters<typeof defaultResolver>[1];
 
 /**
  * A resolver for `jest` that uses same strategy as TS when resolving files with
